@@ -1,22 +1,59 @@
-const URL = '';
+const URL = "https://rickandmortyapi.com/api/character/";
+let characters;
 
-const mainCard = document.querySelector('#card');
+const selectElement = document.querySelector("#sel-character");
+selectElement.addEventListener("change", selectController);
 
+fetchApi();
+
+const mainCard = document.querySelector("#main-card");
 /*traer todos los elementos del template*/
-const templateCard =document.querySelector('#template-card').content;
+const templateCard = document.querySelector("#template-card").content;
 
 /*Un fragment funciona como un arreglo */
 const fragment = document.createDocumentFragment();
 
-const btnGenerate = document.getElementById('#btn-generate');
+function addOptions() {
+  for (const iterator in characters) {
+    let option = document.createElement("option");
+    option.setAttribute("value", iterator);
+    option.textContent = characters[iterator].name;
+    selectElement.add(option);
+  }
+}
 
-btnGenerate.addEventListener('click', FetchApi);
+function selectController(event) {
+  if (!(event.target.value === "anyone")) {
+    mainCard.innerHTML = "";
+    if (event.target.value === "everybody") {
+      createAllCards();
+    } else {
+      createCard(characters[event.target.value]);
+    }
+  }
+}
 
-function createCard(simpson){
-    let clone_template = document.importNode(templateCard, true);
-    clone_template.querySelector(".image-card").setAttibute('src'. simpson[0].image);
-    clone_template.querySelector(".name-card").textContent = simpson[0].character;
-    clone_template.querySelector(".quote-card").textContent = `Quote: ${simpson[0].quote}`;
-    fragment.appendChild(clone_template);
-    mainCard.appendChild(fragment);
+function createAllCards() {
+  for (const iterator of characters) {
+    createCard(iterator);
+  }
+}
+
+function createCard(element) {
+  let clone_template = document.importNode(templateCard, true);
+  clone_template.querySelector(".img-card").setAttribute("src", element.image);
+  clone_template.querySelector(".img-card").setAttribute("alt", element.name);
+  clone_template.querySelector(".name-card").textContent = element.name;
+  clone_template.querySelector(".button-card").textContent = element.gender;
+  fragment.appendChild(clone_template);
+  mainCard.appendChild(fragment);
+}
+
+function fetchApi() {
+  fetch(URL)
+    .then((response) => response.json())
+    .then((card) => {
+      characters = card.results;
+      addOptions();
+    });
 }
