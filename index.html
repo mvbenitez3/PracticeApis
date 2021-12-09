@@ -1,12 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>RICK AND MORTY</title>
+    <link rel="stylesheet" href="./style/style.css">
 </head>
+
 <body>
-    
+    <header class="header">
+        <h1>Rick And Morty - API</h1>
+        <nav>
+            <select name="" id="sel-character">
+                <option value="anyone">Select one character</option>
+                <option id="everybody" value="everybody">All the character</option>
+            </select>
+        </nav>
+    </header>
+    <main id="main-card">
+        <template id="template-card">
+            <div class="card">
+                <div>
+                    <img class="img-card" src="" alt="">
+                    <br />
+                    <h3 class="name-card"></h3>
+                    <br />
+                </div>
+                <button class="button-card"></button>
+            </div>
+        </template>
+    </main>
+
+    <footer>@Compacode</footer>
+    <script src="./js/app.js"></script>
 </body>
+
 </html>
